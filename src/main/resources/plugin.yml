@@ -1,0 +1,8 @@
+name: BookLogin
+version: '${project.version}'
+main: com.mcla.booklogin.BookLogin
+api-version: 1.20
+depend: [ AuthMe ]
+authors: [ IceLight ]
+website: www.52mcla.com
+folia-supported: true
