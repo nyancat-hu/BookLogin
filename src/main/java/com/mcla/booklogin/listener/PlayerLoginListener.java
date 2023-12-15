@@ -23,7 +23,7 @@ public class PlayerLoginListener implements Listener {
     @EventHandler
     public void PlayerLogin(LoginEvent e) {
         Player p = e.getPlayer();
-        ItemStack[] I = (ItemStack[]) Book.Inventory.get(p);
+        ItemStack[] I = Book.Inventory.get(p);
 
         for(int i = 0; i < I.length; ++i) {
             if (((ItemStack[])Book.Inventory.get(p))[i] != null) {

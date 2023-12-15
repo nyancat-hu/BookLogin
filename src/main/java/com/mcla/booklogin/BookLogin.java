@@ -15,7 +15,7 @@ public final class BookLogin extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         PluginMain = this;
-        this.getLogger().info("欢迎使用BOOKLOGIN");
+        this.getLogger().info("[澜星]欢迎使用BOOKLOGIN");
         Bukkit.getPluginManager().registerEvents(this, this);
         if (!(new File(this.getDataFolder() + File.separator + "config.yml")).exists()) {
             this.getConfig().set("Setting.content", "§1欢迎使用书本登陆插件!\n§c★★§9[name]§c★★\n§8§o输入完密码后点击完成，请勿点击署名\n§c请在下方输入密码§l\n  ▲");
