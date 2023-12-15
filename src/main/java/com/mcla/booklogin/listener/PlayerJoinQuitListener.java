@@ -24,30 +24,27 @@ import java.util.function.Consumer;
  * @Version: 1.0
  */
 public class PlayerJoinQuitListener implements Listener {
-
+    AuthMeApi API;
     public PlayerJoinQuitListener() {
+         API = AuthMeApi.getInstance();
     }
 
     @EventHandler
     public void PlayerJoin(PlayerJoinEvent e) {
         final Player p = e.getPlayer();
-        p.getScheduler().runDelayed(BookLogin.getMain(), scheduledTask -> {
-            Book.sendbook(p);
-            scheduledTask.cancel();
-        }, () -> System.out.println("错误:玩家不存在！"), 10L);
-//        (new BukkitRunnable() {
-//            public void run() {
-//                Book.sendbook(p);
-//                this.cancel();
-//            }
-//        }).runTaskLater(BookLogin.getMain(), 10L);
+        if(!API.isAuthenticated(p)){
+            p.getScheduler().runDelayed(BookLogin.getMain(), scheduledTask -> {
+                Book.sendbook(p);
+                scheduledTask.cancel();
+            }, () -> System.out.println("错误:玩家不存在！"), 10L);
+        }
     }
 
     @EventHandler
     public void leave(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         if (!AuthMeApi.getInstance().isAuthenticated(p)) {
-            ItemStack[] I = (ItemStack[])Book.Inventory.get(p);
+            ItemStack[] I = Book.Inventory.get(p);
 
             for(int i = 0; i < I.length; ++i) {
                 if (((ItemStack[])Book.Inventory.get(p))[i] != null) {

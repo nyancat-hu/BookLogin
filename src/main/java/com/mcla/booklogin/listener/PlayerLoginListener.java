@@ -1,6 +1,7 @@
 package com.mcla.booklogin.listener;
 
 import com.mcla.booklogin.book.Book;
+import fr.xephi.authme.api.v3.AuthMeApi;
 import fr.xephi.authme.events.LoginEvent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,27 +18,30 @@ import org.bukkit.inventory.meta.BookMeta;
  * @Version: 1.0
  */
 public class PlayerLoginListener implements Listener {
+    AuthMeApi API;
     public PlayerLoginListener() {
+        API = AuthMeApi.getInstance();
     }
 
     @EventHandler
     public void PlayerLogin(LoginEvent e) {
         Player p = e.getPlayer();
-        ItemStack[] I = Book.Inventory.get(p);
+        if(!API.isAuthenticated(p)){
+            ItemStack[] I = Book.Inventory.get(p);
 
-        for(int i = 0; i < I.length; ++i) {
-            if (((ItemStack[])Book.Inventory.get(p))[i] != null) {
-                p.getInventory().setItem(i, ((ItemStack[])Book.Inventory.get(p))[i]);
-            } else {
-                ItemStack item = p.getInventory().getItem(i);
-                if (item != null && item.getType() == Material.WRITABLE_BOOK) {
-                    BookMeta b1 = (BookMeta)item.getItemMeta();
-                    if (b1.getPage(1).contains("▲")) {
-                        p.getInventory().clear(i);
+            for(int i = 0; i < I.length; ++i) {
+                if (((ItemStack[])Book.Inventory.get(p))[i] != null) {
+                    p.getInventory().setItem(i, ((ItemStack[])Book.Inventory.get(p))[i]);
+                } else {
+                    ItemStack item = p.getInventory().getItem(i);
+                    if (item != null && item.getType() == Material.WRITABLE_BOOK) {
+                        BookMeta b1 = (BookMeta)item.getItemMeta();
+                        if (b1.getPage(1).contains("▲")) {
+                            p.getInventory().clear(i);
+                        }
                     }
                 }
             }
         }
-
     }
 }
