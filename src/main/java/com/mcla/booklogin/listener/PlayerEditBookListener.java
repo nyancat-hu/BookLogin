@@ -1,6 +1,7 @@
 package com.mcla.booklogin.listener;
 
 import fr.xephi.authme.api.v3.AuthMeApi;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,7 +31,8 @@ public class PlayerEditBookListener implements Listener {
                 if (API.checkPassword(p.getName(), Password)) {
                     API.forceLogin(p);
                 } else {
-                    p.sendMessage("§c密码错误");
+//                    p.sendMessage("§c");
+                    p.kickPlayer("密码错误");
                 }
             } else if (API.registerPlayer(p.getName(), Password)) {
                 API.forceLogin(p);
@@ -38,7 +40,7 @@ public class PlayerEditBookListener implements Listener {
                 p.sendMessage("§c未知错误，请重新进入服务器。");
             }
         } else if (!API.isAuthenticated(p)) {
-            p.sendMessage("§c请勿删除书本中的▲，请换一本书重试。");
+            p.sendMessage("§c请勿删除书本中的▲符号，请换一本书重试。");
         }
 
     }
